@@ -22,3 +22,8 @@ df.groupby(['Country']).agg({'CustomerID' : 'nunique'}).sort_values(by = "Custom
 # Top 5 of product the most buy
 df.groupby(["Description"]).agg({'Quantity' : 'sum'}).sort_values(by = "Quantity", ascending= False).head(5)
 
+# Transform InvoiceDate to a datetime
+df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'], format= '%m/%d/%Y %H:%M')
+
+df["date"] = df["InvoiceDate"].dt.date  # add column date
+df["time"] = df["InvoiceDate"].dt.time  # add column hours
