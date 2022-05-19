@@ -25,5 +25,9 @@ df.groupby(["Description"]).agg({'Quantity' : 'sum'}).sort_values(by = "Quantity
 # Transform InvoiceDate to a datetime
 df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'], format= '%m/%d/%Y %H:%M')
 
-df["date"] = df["InvoiceDate"].dt.date  # add column date
+df["date"] = pd.to_datetime(df["InvoiceDate"].dt.date , format='%Y-%m-%d') # add column date
 df["time"] = df["InvoiceDate"].dt.time  # add column hours
+
+# Quantity ordered per month 
+df2 = pd.DataFrame(df[['date', 'Quantity']])
+df2.groupby(pd.Grouper(freq='MS', key='date')).sum()
